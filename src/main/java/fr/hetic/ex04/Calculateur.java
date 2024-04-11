@@ -6,40 +6,39 @@ import java.util.function.BinaryOperator;
 
 public class Calculateur {
     public static void main(String[] args) {
-        
+        try {
+            double result = calculate(args);
+            System.out.println(result);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static double calculate(String[] args) {
         if (args.length != 3) {
-            System.out.println("Il faut 3 arguments : deux nombres et un opérateur (+, - ou *)");
-            return;
+            throw new IllegalArgumentException("Il faut 3 arguments : deux nombres et un opérateur (+, - ou *)");
         }
 
-        
-        double a = 0;
-        double b = 0;
+        double a, b;
         try {
             a = Double.parseDouble(args[0]);
             b = Double.parseDouble(args[1]);
         } catch (NumberFormatException e) {
-            System.out.println("Les deux premiers arguments doivent être des nombres");
-            return;
+            throw new IllegalArgumentException("Les deux premiers arguments doivent être des nombres");
         }
 
-        
         String operator = args[2];
 
-        
         Map<String, BinaryOperator<Double>> operations = new HashMap<>();
         operations.put("+", (x, y) -> x + y);
-        operations.put("-", (x, y) -> x - y); 
+        operations.put("-", (x, y) -> x - y);
+        // Ajoutez d'autres opérateurs si nécessaire
 
-        
         BinaryOperator<Double> operation = operations.get(operator);
         if (operation == null) {
-            System.out.println("L'opérateur doit être + ou -");
-            return;
+            throw new IllegalArgumentException("L'opérateur doit être + ou -");
         }
 
-        
-        double result = operation.apply(a, b);
-        System.out.println(result);
+        return operation.apply(a, b);
     }
 }
