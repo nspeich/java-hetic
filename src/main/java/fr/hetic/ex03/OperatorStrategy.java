@@ -1,5 +1,5 @@
-package fr.hetic.exo3;
+// package fr.hetic.exo3;
 
-public interface OperationStrategy {
-    int performOperation(int a, int b);
-}
+// public interface OperationStrategy {
+//     int performOperation(int a, int b);
+// }
